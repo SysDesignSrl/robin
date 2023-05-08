@@ -240,6 +240,9 @@ class SourceGenerator:
 
                 for member in var.members:
 
+                    if (member.type == 'nonpod_array' and member.members is not None and len(member.members) > 0):
+                        member.cpp_len += member.members[0].cpp_len
+
                     # "  {cpp} {name}{len};\n"
                     # maps with template content
                     struct_src += self._templates['structs']['line'].format(cpp=member.cpp_type,
