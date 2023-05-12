@@ -9,7 +9,7 @@ node:
         int main(int argc, char **argv)
         {{
           ros::init(argc, argv, "robin");
-          ros::NodeHandle nh;
+          ros::NodeHandle nh("~");
         {}  ROS_INFO("Robin node initiated...");
           ros::spin();
           return 0;

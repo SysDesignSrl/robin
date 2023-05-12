@@ -240,14 +240,16 @@ class SourceGenerator:
 
                 for member in var.members:
 
-                    if (member.type == 'nonpod_array' and member.members is not None and len(member.members) > 0):
-                        member.cpp_len += member.members[0].cpp_len
+                    member_len = member.cpp_len
+
+                    if ((member.type == 'nonpod_array' or member.type == 'nonpod_varlen_array') and member.ros_type == 'string' and member.members is not None and len(member.members) > 0):
+                        member_len += member.members[0].cpp_len
 
                     # "  {cpp} {name}{len};\n"
                     # maps with template content
                     struct_src += self._templates['structs']['line'].format(cpp=member.cpp_type,
                                                                             name=member.name,
-                                                                            len=member.cpp_len)
+                                                                            len=member_len)
 
                 # "struct {name}\n{{\n{src}}};\n"
                 self._source['structs'] += self._templates['structs']['struct'].format(
