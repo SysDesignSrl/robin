@@ -65,7 +65,7 @@ codesys:  #TODO change to 'primitive'
         #     - std_msgs::Char
         ROS_TIME:
             - Time
-            - time
+            - Time
             - std_msgs::Time
         ROS_DURATION:
             - Duration
