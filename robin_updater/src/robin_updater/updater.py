@@ -132,6 +132,7 @@ class Updater:
                     cp robin/robin_updater/cfg/package.xml robin_bridge_generated/
                     cp robin/robin_updater/cfg/run.sh robin_bridge_generated/launch
                     cp robin/robin_updater/cfg/run.launch robin_bridge_generated/launch
+                    cp robin/robin_updater/cfg/robin_node_generated.launch robin_bridge_generated/launch
                     cp robin/robin_bridge/include/robin_bridge/structs.h robin_bridge_generated/include/robin_bridge_generated/
                     cp robin/robin_bridge/src/robin_node.cpp robin_bridge_generated/src/
                     cp robin/robin_bridge/src/robin_bridge/robin_inst.cpp robin_bridge_generated/src/robin_bridge_generated/
@@ -191,7 +192,7 @@ class Updater:
 
                 # catkin_package
                 # TODO: This does not seem to be doing anything
-                new_src = ('\n  CATKIN_DEPENDS roscpp robin_bridge message_generation '
+                new_src = ('\n  CATKIN_DEPENDS roscpp robin_bridge '
                          + ''.join([pkg + ' ' for pkg in msg_pkgs])
                          + 'message_runtime' if len(msgs) > 0 else '')
                 content = re.sub('\n#?\s*CATKIN_DEPENDS roscpp.*', new_src, content)
@@ -256,6 +257,7 @@ class Updater:
 
             # builds new part of package.xml
             new_src = ('\n  <depend>roscpp</depend>\n'
+                     + '  <depend>robin_bridge</depend>\n'
                      + ''.join(['  <depend>' + pkg + '</depend>\n' for pkg in msg_pkgs])
                      +('  <build_depend>message_generation</build_depend>\n'
                      + '  <exec_depend>message_runtime</exec_depend>\n' if len(msgs) > 0 else '')

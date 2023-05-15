@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   robin_bridge
   std_msgs
   geometry_msgs
+  sensor_msgs
   message_generation
 )
 
@@ -24,6 +25,7 @@ generate_messages(
   DEPENDENCIES
   std_msgs
   geometry_msgs
+  sensor_msgs
 )
 
 
@@ -33,7 +35,7 @@ generate_messages(
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp robin_bridge std_msgs geometry_msgs message_generation
+  CATKIN_DEPENDS roscpp robin_bridge std_msgs geometry_msgs sensor_msgs message_generation message_runtime
 )
 
 ###########
@@ -60,3 +62,30 @@ target_link_libraries(robin_node_generated
   robin_inst_generated
 )
 
+#############
+## Install ##
+#############
+
+## Mark executables for installation
+install(
+  TARGETS robin_node_generated
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Mark libraries for installation
+install(
+  TARGETS robin_inst_generated
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
+
+## Mark cpp header files for installation
+install(
+  DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+)
+
+## Mark other files for installation (e.g. launch and bag files, etc.)
+install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

@@ -136,5 +136,33 @@ ros:  #TODO change to 'msgs'/'msg_pkgs'
         - Vector3Stamped
         - Wrench
         - WrenchStamped
-    
+    sensor_msgs:
+        - BatteryState
+        - CameraInfo
+        - ChannelFloat32
+        - CompressedImage
+        - FluidPressure
+        - Illuminance
+        - Image
+        - Imu
+        - JointState
+        - Joy
+        - JoyFeedback
+        - JoyFeedbackArray
+        - LaserEcho
+        - LaserScan
+        - MagneticField
+        - MultiDOFJointState
+        - MultiEchoLaserScan
+        - NavSatFix
+        - NavSatStatus
+        - PointCloud
+        - PointCloud2
+        - PointField
+        - Range
+        - RegionOfInterest
+        - RelativeHumidity
+        - Temperature
+        - TimeReference
+
 #TODO actionlib_msgs, etc.

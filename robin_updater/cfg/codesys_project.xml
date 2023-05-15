@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0200">
-  <fileHeader companyName="" productName="CODESYS" productVersion="CODESYS V3.5 SP18 Patch 2" creationDateTime="2023-05-12T09:11:09.1774968" />
-  <contentHeader name="pj23SH01.project" modificationDateTime="2023-05-12T09:10:59.1943593">
+  <fileHeader companyName="" productName="CODESYS" productVersion="CODESYS V3.5 SP18 Patch 2" creationDateTime="2023-05-15T15:41:21.6978159" />
+  <contentHeader name="pj23SH01.project" modificationDateTime="2023-05-15T15:41:04.7777322">
     <coordinateInfo>
       <fbd>
         <scaling x="1" y="1" />
@@ -1500,7 +1500,7 @@
           <struct>
             <variable name="header">
               <type>
-                <derived name="Header_" />
+                <derived name="Header" />
               </type>
             </variable>
             <variable name="name">
@@ -1573,7 +1573,13 @@
             </variable>
           </struct>
         </baseType>
-        <addData />
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/buildproperties" handleUnknown="implementation">
+            <BuildProperties>
+              <ExcludeFromBuild>true</ExcludeFromBuild>
+            </BuildProperties>
+          </data>
+        </addData>
       </dataType>
       <dataType name="ros_to_codesys_struct_t">
         <baseType>
@@ -1641,7 +1647,13 @@
             </variable>
           </struct>
         </baseType>
-        <addData />
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/buildproperties" handleUnknown="implementation">
+            <BuildProperties>
+              <ExcludeFromBuild>true</ExcludeFromBuild>
+            </BuildProperties>
+          </data>
+        </addData>
       </dataType>
     </dataTypes>
     <pous>
@@ -3917,6 +3929,11 @@ METH_GetNewKey := xRes;</xhtml>
                 <xhtml xmlns="http://www.w3.org/1999/xhtml" />
               </documentation>
             </pouInstance>
+            <pouInstance name="prgDial_ROSLifter_A" typeName="">
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+              </documentation>
+            </pouInstance>
             <addData>
               <data name="http://www.3s-software.com/plcopenxml/tasksettings" handleUnknown="implementation">
                 <TaskSettings KindOfTask="Cyclic" Interval="100" IntervalUnit="ms" WithinSPSTimeSlicing="true">
@@ -4917,7 +4934,8 @@ METH_GetNewKey := xRes;</xhtml>
                         <BOOL />
                       </type>
                       <documentation>
-                        <xhtml xmlns="http://www.w3.org/1999/xhtml"> to ROS</xhtml>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml"> to ROS
+ 	battery_state_01 : BatteryState;</xhtml>
                       </documentation>
                     </variable>
                     <variable name="run_02">
@@ -5446,6 +5464,8 @@ ROSInterface_02.ROS2Codesys.Subscripted.lifter_controller_command := lifter_cont
                     <xhtml xmlns="http://www.w3.org/1999/xhtml">// instancing Robin class
 robin();
 
+// robin.FB_Init()
+// robin.FB_Exit()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //																																		//
 //												READ - robin.read(&lt;topic_name&gt;, &lt;variable&gt;)												//
@@ -5478,6 +5498,8 @@ robin.write('lifter_controller_feedback_02', lifter_controller_feedback_02);
 
 robin.write('lifter_controller_joint_states_01', lifter_controller_joint_states_01);
 robin.write('lifter_controller_joint_states_02', lifter_controller_joint_states_02);
+
+// robin.write('battery_state_01', battery_state_01);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SHARED MEMORY VARIABLES
@@ -5993,8 +6015,11 @@ METH_SetRun_02 := ROSInterface_02.Codesys2ROS.Published.run;</xhtml>
 	CONCAT(
 		sPatternFolderPath,
 		CONCAT(
-			sPatternName,
-			'.yaml'
+			'pattern_',
+			CONCAT(
+				sPatternName,
+				'.yaml'
+			)
 		)
 	)
 ;
@@ -6114,6 +6139,272 @@ METH_ComposePatternFilePath := sRes;</xhtml>
                       <body>
                         <ST>
                           <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_02.Codesys2ROS.Published.rgt_palletizing_options.tool_name := sValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_SetLifterEffort_01">
+                      <interface>
+                        <inputVars>
+                          <variable name="lrValue">
+                            <type>
+                              <LREAL />
+                            </type>
+                          </variable>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_01.Codesys2ROS.Published.lifter_controller_joint_states.effort[iIndex] := lrValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_SetLifterName_01">
+                      <interface>
+                        <inputVars>
+                          <variable name="sValue">
+                            <type>
+                              <string />
+                            </type>
+                          </variable>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_01.Codesys2ROS.Published.lifter_controller_joint_states.name[iIndex] := sValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_SetLifterPosition_01">
+                      <interface>
+                        <inputVars>
+                          <variable name="lrValue">
+                            <type>
+                              <LREAL />
+                            </type>
+                          </variable>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_01.Codesys2ROS.Published.lifter_controller_joint_states.position[iIndex] := lrValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_SetLifterVelocity_01">
+                      <interface>
+                        <inputVars>
+                          <variable name="lrValue">
+                            <type>
+                              <LREAL />
+                            </type>
+                          </variable>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_01.Codesys2ROS.Published.lifter_controller_joint_states.velocity[iIndex] := lrValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_SetLifterEffort_02">
+                      <interface>
+                        <inputVars>
+                          <variable name="lrValue">
+                            <type>
+                              <LREAL />
+                            </type>
+                          </variable>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_02.Codesys2ROS.Published.lifter_controller_joint_states.effort[iIndex] := lrValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_SetLifterName_02">
+                      <interface>
+                        <inputVars>
+                          <variable name="sValue">
+                            <type>
+                              <string />
+                            </type>
+                          </variable>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_02.Codesys2ROS.Published.lifter_controller_joint_states.name[iIndex] := sValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_SetLifterPosition_02">
+                      <interface>
+                        <inputVars>
+                          <variable name="lrValue">
+                            <type>
+                              <LREAL />
+                            </type>
+                          </variable>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_02.Codesys2ROS.Published.lifter_controller_joint_states.position[iIndex] := lrValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_SetLifterVelocity_02">
+                      <interface>
+                        <inputVars>
+                          <variable name="lrValue">
+                            <type>
+                              <LREAL />
+                            </type>
+                          </variable>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">ROSInterface_02.Codesys2ROS.Published.lifter_controller_joint_states.velocity[iIndex] := lrValue;</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_GetLifterPosition_01">
+                      <interface>
+                        <returnType>
+                          <LREAL />
+                        </returnType>
+                        <inputVars>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">METH_GetLifterPosition_01 := ROSInterface_01.Codesys2ROS.Published.lifter_controller_joint_states.position[iIndex];</xhtml>
+                        </ST>
+                      </body>
+                      <addData />
+                    </Method>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                    <Method name="METH_GetLifterPosition_02">
+                      <interface>
+                        <returnType>
+                          <LREAL />
+                        </returnType>
+                        <inputVars>
+                          <variable name="iIndex">
+                            <type>
+                              <INT />
+                            </type>
+                            <initialValue>
+                              <simpleValue value="0" />
+                            </initialValue>
+                          </variable>
+                        </inputVars>
+                      </interface>
+                      <body>
+                        <ST>
+                          <xhtml xmlns="http://www.w3.org/1999/xhtml">METH_GetLifterPosition_02 := ROSInterface_02.Codesys2ROS.Published.lifter_controller_joint_states.position[iIndex];</xhtml>
                         </ST>
                       </body>
                       <addData />
@@ -15765,7 +16056,7 @@ ACT_JointsInRadians();
                             <simpleValue value="'SMALL_BOX'" />
                           </value>
                           <value>
-                            <simpleValue value="'BIG_BOX'" />
+                            <simpleValue value="'LARGE_BOX'" />
                           </value>
                         </arrayValue>
                       </initialValue>
@@ -25568,6 +25859,79 @@ xBusy :=  FALSE;</xhtml>
                         <BOOL />
                       </type>
                     </variable>
+                    <variable name="xValidAction">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="lrTargetPosition">
+                      <type>
+                        <LREAL />
+                      </type>
+                    </variable>
+                    <variable name="LIN_TRAFO_Pos">
+                      <type>
+                        <derived name="Util.LIN_TRAFO" />
+                      </type>
+                    </variable>
+                    <variable name="tElapsed">
+                      <type>
+                        <TIME />
+                      </type>
+                    </variable>
+                    <variable name="rOutPos">
+                      <type>
+                        <REAL />
+                      </type>
+                    </variable>
+                    <variable name="lrMin">
+                      <type>
+                        <REAL />
+                      </type>
+                    </variable>
+                    <variable name="rMin">
+                      <type>
+                        <REAL />
+                      </type>
+                    </variable>
+                    <variable name="rMax">
+                      <type>
+                        <REAL />
+                      </type>
+                    </variable>
+                    <variable name="xErrorTrafo">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="lrCurrentPos">
+                      <type>
+                        <LREAL />
+                      </type>
+                    </variable>
+                    <variable name="lrPos">
+                      <type>
+                        <LREAL />
+                      </type>
+                    </variable>
+                  </localVars>
+                  <localVars constant="true">
+                    <variable name="c_sLifterName">
+                      <type>
+                        <string />
+                      </type>
+                      <initialValue>
+                        <simpleValue value="'LIFTER01'" />
+                      </initialValue>
+                    </variable>
+                    <variable name="c_iLifterIndex">
+                      <type>
+                        <INT />
+                      </type>
+                      <initialValue>
+                        <simpleValue value="0" />
+                      </initialValue>
+                    </variable>
                   </localVars>
                 </interface>
                 <actions>
@@ -25582,11 +25946,59 @@ F_TRIG_Abort(CLK := CTRL_Axis.xAbort);
 
 IF R_TRIG_Execute.Q THEN
 	xSimTimeCond := TRUE;
+	prgROS.METH_SetLifterVelocity_01(lrValue := 100.0);
+	prgROS.METH_SetLifterEffort_01(lrValue := 2.0);
+	xValidAction := TRUE;
+	CASE diActionID OF
+				0:
+					lrTargetPosition := 0.0;
+				1:
+					lrTargetPosition := 300.0;
+				2:
+					lrTargetPosition := 600.0;
+		ELSE
+			xValidAction := FALSE;
+	END_CASE
 END_IF
 IF R_TRIG_Abort.Q THEN
 	xAbortNow := TRUE;
 END_IF
-TON_Sim(IN := xSimTimeCond, PT := tSim);
+TON_Sim(IN := xSimTimeCond, PT := tSim, ET =&gt; tElapsed);
+
+lrCurrentPos := TO_REAL(prgROS.METH_GetLifterPosition_01());
+// simulate position increment
+IF xSimTimeCond THEN
+	IF xValidAction THEN
+		IF lrCurrentPos &lt; lrTargetPosition THEN
+			rMin := TO_REAL(lrCurrentPos);
+			rMax := TO_REAL(lrTargetPosition);
+		ELSE
+			rMin := TO_REAL(lrTargetPosition);
+			rMax := TO_REAL(lrCurrentPos);
+		END_IF
+		
+		LIN_TRAFO_Pos(
+			IN := TO_REAL(tElapsed),
+			IN_MIN := 0.0,
+			IN_MAX := TO_REAL(tSim),
+			OUT_MIN := rMin,
+			OUT_MAX := rMax,
+			OUT =&gt; rOutPos,
+			ERROR =&gt; xErrorTrafo		
+		);
+		IF NOT xErrorTrafo THEN
+			IF lrCurrentPos &lt;&gt; lrTargetPosition THEN
+				IF lrCurrentPos &lt; lrTargetPosition THEN
+					lrPos := TO_LREAL(rOutPos);
+				ELSE
+					lrPos := lrCurrentPos - TO_LREAL(rOutPos);
+				END_IF
+			END_IF
+			prgROS.METH_SetLifterPosition_01(lrValue := lrPos);
+		END_IF
+	END_IF
+END_IF
+
 IF TON_Sim.Q THEN
 	TON_Sim(IN := FALSE);
 	xSimTimeCond := FALSE;
@@ -25594,17 +26006,29 @@ IF TON_Sim.Q THEN
 		0, 1, 2:
 			prgROSInterfaceToLifter01.METH_SetSuccess();
 			diLastErrorID := 0;
+			// Set joint states
+			prgROS.METH_SetLifterPosition_01(lrValue := lrTargetPosition);
 		ELSE
 			prgROSInterfaceToLifter01.METH_SetFailure();
 			diLastErrorID := 1;
 	END_CASE
+	
+	prgROS.METH_SetLifterVelocity_01(lrValue := 0.0);
+	prgROS.METH_SetLifterEffort_01(lrValue := 1.0);
+	
 	CTRL_Axis.xExecute := FALSE;
+	CTRL_Axis.xAbort := FALSE;
 ELSIF xAbortNow THEN
 	xAbortNow := FALSE;
 	xSimTimeCond := FALSE;
 	prgROSInterfaceToLifter01.METH_SetAborted();
 	diLastErrorID := -1;
+	
+	prgROS.METH_SetLifterVelocity_01(lrValue := 0.0);
+	prgROS.METH_SetLifterEffort_01(lrValue := 1.0);
+	
 	CTRL_Axis.xExecute := FALSE;
+	CTRL_Axis.xAbort := FALSE;
 END_IF</xhtml>
                       </ST>
                     </body>
@@ -25613,7 +26037,8 @@ END_IF</xhtml>
                 </actions>
                 <body>
                   <ST>
-                    <xhtml xmlns="http://www.w3.org/1999/xhtml">IF xSimulation THEN
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">prgROS.METH_SetLifterName_01(sValue := c_sLifterName, iIndex := c_iLifterIndex);
+IF xSimulation THEN
 	ACT_Simulation();
 ELSE
 	//
@@ -25706,6 +26131,73 @@ END_IF</xhtml>
                 </addData>
               </pou>
             </data>
+            <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+              <pou name="prgDial_ROSLifter_A" pouType="program">
+                <interface>
+                  <localVars>
+                    <variable name="JointStates">
+                      <type>
+                        <derived name="JointState" />
+                      </type>
+                    </variable>
+                    <variable name="iIndex">
+                      <type>
+                        <INT />
+                      </type>
+                    </variable>
+                    <variable name="sName">
+                      <type>
+                        <string />
+                      </type>
+                    </variable>
+                    <variable name="lrPosition">
+                      <type>
+                        <LREAL />
+                      </type>
+                    </variable>
+                    <variable name="lrVelocity">
+                      <type>
+                        <LREAL />
+                      </type>
+                    </variable>
+                    <variable name="lrEffort">
+                      <type>
+                        <LREAL />
+                      </type>
+                    </variable>
+                    <variable name="Command">
+                      <type>
+                        <derived name="CommonCommand" />
+                      </type>
+                    </variable>
+                    <variable name="Feedback">
+                      <type>
+                        <derived name="CommonFeedback" />
+                      </type>
+                    </variable>
+                  </localVars>
+                </interface>
+                <body>
+                  <ST>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">JointStates := prgROS.ROSInterface_01.Codesys2ROS.Published.lifter_controller_joint_states;
+iIndex := prgLifter01.c_iLifterIndex;
+sName := JointStates.name[iIndex];
+lrPosition := JointStates.position[iIndex];
+lrVelocity := JointStates.velocity[iIndex];
+lrEffort := JointStates.effort[iIndex];
+
+IF __ISVALIDREF(prgROSInterfaceToLifter01.REFCommand) THEN
+	Command := prgROSInterfaceToLifter01.REFCommand;
+END_IF
+
+IF __ISVALIDREF(prgROSInterfaceToLifter01.REFFeedback) THEN
+	Feedback := prgROSInterfaceToLifter01.REFFeedback;
+END_IF</xhtml>
+                  </ST>
+                </body>
+                <addData />
+              </pou>
+            </data>
             <data name="http://www.3s-software.com/plcopenxml/union" handleUnknown="implementation">
               <union name="sorter_elem_info_union_t">
                 <variable name="BufferInfo">
@@ -25727,7 +26219,6 @@ END_IF</xhtml>
                 <Library Name="#SM3_Robotics_Visu" Namespace="SM3_Robotics_Visu" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="SM3_Robotics_Visu, 4.10.0.0 (3S - Smart Software Solutions GmbH)" />
                 <Library Name="#SM3_Transformation" Namespace="TRAFO" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="SM3_Transformation, 4.10.0.0 (3S - Smart Software Solutions GmbH)" />
                 <Library Name="#BreakpointLogging" Namespace="BPLog" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="Breakpoint Logging Functions, 3.5.5.0 (3S - Smart Software Solutions GmbH)" />
-                <Library Name="Robin, 0.1.2 (INESC TEC)" Namespace="Robin" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="false" LinkAllContent="false" />
                 <Library Name="#VisuUserManagement" Namespace="VisuUserManagement" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuUserMgmt, * (System)" />
                 <Library Name="#VisuDialogs" Namespace="VisuDialogs" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="false" LinkAllContent="false" DefaultResolution="VisuDialogs, * (System)" />
                 <Library Name="#IecVarAccess" Namespace="IecVarAccessLibrary" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="IecVarAccess, 3.3.1.20 (System)" />
@@ -25811,6 +26302,7 @@ END_IF</xhtml>
                   </Parameters>
                 </Library>
                 <Library Name="#SysSemProcess" Namespace="SysSemProcess" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="false" LinkAllContent="false" DefaultResolution="SysSemProcess, * (System)" />
+                <Library Name="Robin, 3.5.18.0 (INESC TEC)" Namespace="Robin" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="false" LinkAllContent="false" />
                 <addData />
               </Libraries>
             </data>
