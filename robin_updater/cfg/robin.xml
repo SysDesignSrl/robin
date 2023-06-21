@@ -2175,7 +2175,7 @@ https://github.com/ScalABLE40/robin</property>
             <variable name="name">
               <type>
                 <array>
-                  <dimension lower="1" upper="Robin.DEF_ARRAY_LEN" />
+                  <dimension lower="1" upper="1" />
                   <baseType>
                     <string />
                   </baseType>
@@ -3159,6 +3159,141 @@ https://github.com/ScalABLE40/robin</property>
           <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'pack_mode' := '0'}</xhtml>
         </documentation>
       </dataType>
+
+      <!-- diagnostic msgs -->
+      <dataType name="DiagnosticArray">
+        <baseType>
+          <struct>
+            <variable name="header">
+              <type>
+                <derived name="Header" />
+              </type>
+            </variable>
+            <variable name="status">
+              <type>
+                <array>
+                  <dimension lower="1" upper="Robin.DEF_ARRAY_LEN" />
+                  <baseType>
+                    <derived name="DiagnosticStatus" />
+                  </baseType>
+                </array>
+              </type>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                  <Attributes>
+                    <Attribute Name="robin_var_len" Value="" />
+                  </Attributes>
+                </data>
+              </addData>
+            </variable>
+          </struct>
+        </baseType>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>4f573018-1c53-468b-aabc-953d33b7098c</ObjectId>
+          </data>
+        </addData>
+        <documentation>
+          <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'pack_mode' := '0'}</xhtml>
+        </documentation>
+      </dataType>
+
+      <!-- 
+        # This message holds the status of an individual component of the robot.
+        # 
+
+        # Possible levels of operations
+        byte OK=0
+        byte WARN=1
+        byte ERROR=2
+        byte STALE=3
+
+        byte level # level of operation enumerated above 
+        string name # a description of the test/component reporting
+        string message # a description of the status
+        string hardware_id # a hardware unique string
+        KeyValue[] values # an array of values associated with the status
+      -->
+      <dataType name="DiagnosticStatus">
+        <baseType>
+          <struct>
+            <variable name="level">
+              <type>
+                <USINT />
+              </type>
+            </variable>
+            <variable name="name">
+              <type>
+                <string />
+              </type>
+            </variable>
+            <variable name="message">
+              <type>
+                <string />
+              </type>
+            </variable>
+            <variable name="hardware_id">
+              <type>
+                <string />
+              </type>
+            </variable>
+            <variable name="values">
+              <type>
+                <array>
+                  <dimension lower="1" upper="Robin.DEF_ARRAY_LEN" />
+                  <baseType>
+                    <derived name="KeyValue" />
+                  </baseType>
+                </array>
+              </type>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                  <Attributes>
+                    <Attribute Name="robin_var_len" Value="" />
+                  </Attributes>
+                </data>
+              </addData>
+            </variable>
+          </struct>
+        </baseType>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>a795449a-0c14-4f44-b54d-8f43c29dcebd</ObjectId>
+          </data>
+        </addData>
+        <documentation>
+          <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'pack_mode' := '0'}</xhtml>
+        </documentation>
+      </dataType>
+
+      <!-- 
+        string key # what to label this value when viewing
+        string value # a value to track over time
+      -->
+      <dataType name="KeyValue">
+        <baseType>
+          <struct>
+            <variable name="key">
+              <type>
+                <string />
+              </type>
+            </variable>
+            <variable name="value">
+              <type>
+                <string />
+              </type>
+            </variable>
+          </struct>
+        </baseType>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>302618cc-0ff0-401b-a014-468fdda9120e</ObjectId>
+          </data>
+        </addData>
+        <documentation>
+          <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'pack_mode' := '0'}</xhtml>
+        </documentation>
+      </dataType>
     </dataTypes>
     <pous>
       <pou name="Robin" pouType="functionBlock">
@@ -3584,6 +3719,11 @@ idx := idx + 1;
             <Object Name="RelativeHumidity" ObjectId="e14670c5-19e1-4511-b71b-84c6325d6b8d" />
             <Object Name="Temperature" ObjectId="a6e538e4-7712-4108-bd49-3b7cc178fae6" />
             <Object Name="TimeReference" ObjectId="8d889361-c60c-4b5f-b212-d515467cb9bd" />
+          </Folder>
+          <Folder Name="diagnositc_msgs">
+            <Object Name="DiagnosticArray" ObjectId="4f573018-1c53-468b-aabc-953d33b7098c" />
+            <Object Name="DiagnosticStatus" ObjectId="a795449a-0c14-4f44-b54d-8f43c29dcebd" />
+            <Object Name="KeyValue" ObjectId="302618cc-0ff0-401b-a014-468fdda9120e" />
           </Folder>
           <Object Name="RobinData" ObjectId="841c1cae-c1c1-4cf6-b245-6a74f75351c7" />
           <Folder Name="ros_types">

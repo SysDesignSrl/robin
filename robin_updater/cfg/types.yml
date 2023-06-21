@@ -164,5 +164,11 @@ ros:  #TODO change to 'msgs'/'msg_pkgs'
         - RelativeHumidity
         - Temperature
         - TimeReference
+    diagnostic_msgs:
+        - DiagnosticArray
+        - DiagnosticStatus
+        - KeyValue
+
+
 
 #TODO actionlib_msgs, etc.
