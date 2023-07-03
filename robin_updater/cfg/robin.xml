@@ -2192,7 +2192,7 @@ https://github.com/ScalABLE40/robin</property>
             <variable name="position">
               <type>
                 <array>
-                  <dimension lower="1" upper="Robin.DEF_ARRAY_LEN" />
+                  <dimension lower="1" upper="1" />
                   <baseType>
                     <LREAL />
                   </baseType>
@@ -2209,7 +2209,7 @@ https://github.com/ScalABLE40/robin</property>
             <variable name="velocity">
               <type>
                 <array>
-                  <dimension lower="1" upper="Robin.DEF_ARRAY_LEN" />
+                  <dimension lower="1" upper="1" />
                   <baseType>
                     <LREAL />
                   </baseType>
@@ -2226,7 +2226,7 @@ https://github.com/ScalABLE40/robin</property>
             <variable name="effort">
               <type>
                 <array>
-                  <dimension lower="1" upper="Robin.DEF_ARRAY_LEN" />
+                  <dimension lower="1" upper="1" />
                   <baseType>
                     <LREAL />
                   </baseType>

@@ -261,7 +261,8 @@ class Updater:
                      + ''.join(['  <depend>' + pkg + '</depend>\n' for pkg in msg_pkgs])
                      +('  <build_depend>message_generation</build_depend>\n'
                      + '  <exec_depend>message_runtime</exec_depend>\n' if len(msgs) > 0 else '')
-                     + '  <exec_depend>python</exec_depend>')
+                     + '  <build_export_depend>message_generation</build_export_depend>')
+                    #  + '  <exec_depend>python</exec_depend>')
 
             # searches and replaces
             content = re.sub('\n  <depend>roscpp<\/depend>[\S\s]*<exec_depend>python<\/exec_depend>', new_src, content)
