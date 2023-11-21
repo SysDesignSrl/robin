@@ -71,16 +71,24 @@ class XMLParser:
         # gets class Robin name
         robin_objs = self._xml_roots[0].xpath('instances//variable[descendant::derived[@name="Robin"]]/@name')
 
+        # look for robin variable under types/pous node if not found under instances
+        if (len(robin_objs) == 0):
+            robin_objs = self._xml_roots[0].xpath('types/pous//variable[descendant::derived[starts-with(@name, "Robin")]]/@name')
+
         # TODO: check if this is supported (more than one robin class?)
         for obj_name in robin_objs:
 
             # retrives all text from ST from POUs with obj_name (list with all text from ST)
             src = self._xml_roots[0].xpath('instances//addData/data/pou/body/ST/*[contains(text(), "{}();")]/text()'.format(obj_name))  #TODO handle spaces
             # src = self._xml_roots[0].xpath('instances//addData/data/pou/body/ST/node()[contains(text(), "{}();")]/text()'.format(obj_name))  #TODO try
-            
+
+            # look for pou containing robin code under types/pous if not found under instances
+            if (len(src) == 0):
+                src = self._xml_roots[0].xpath('types/pous//body/ST/*[contains(text(), "{}();")]/text()'.format(obj_name))  #TODO handle spaces
+
             # each obj_name can only appear in one place (this has to be like this)
             if len(src) == 0:
-                print_("Warning: no source found for robin object '{}'.".format(obj_name))
+                print("Warning: no source found for robin object '{}'.".format(obj_name))
             elif len(src) > 1:
                 raise RuntimeError("Robin object '{}' used in more than one POU.".format(obj_name))
 
